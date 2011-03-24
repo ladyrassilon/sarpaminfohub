@@ -94,12 +94,16 @@ INSTALLED_APPS = (
     'tagging'
 )
 
+SARPAM_NUMBER_FORMAT = ".03f"
+SARPAM_CURRENCY_CODE = u"(USD)"
+
 TEMPLATE_CONTEXT_PROCESSORS = ('django.contrib.auth.context_processors.auth',
                                'django.core.context_processors.debug',
                                'django.core.context_processors.i18n',
                                'django.core.context_processors.media',
                                'django.contrib.messages.context_processors.messages',
                                'django.core.context_processors.request',
+                               'sarpaminfohub.infohub.context.extra_settings_context',
                                )
 
 from local_settings import * #@UnusedWildImport
