@@ -5,7 +5,7 @@
 	<td width="80%" class="scale">
 		<table><tr>
 		{% for k in table.scale %}
-			<td width="10%">{{ k|stringformat:".03f" }}</td>
+			<td width="10%">{{ k|stringformat:number_format }}</td>
 		{% endfor %}
 		</tr></table>
 	</td>
@@ -41,10 +41,10 @@
 <tr class="foot">
 	<td colspan="2">
 		<span class="noborder" id="fobkey">&nbsp;&nbsp;&nbsp;</span>
-		<span class="noborder">FOB Price (USD)</span>
+		<span class="noborder">FOB Price {{curency_code}}</span>
 		<span class="noborder" id="landedkey">&nbsp;&nbsp;&nbsp;</span>
-		<span class="noborder">Landed Price (USD)</span>
-		<span class="mshborder">MSH Price: {{ msh_price }}</span>
+		<span class="noborder">Landed Price {{currency_code}}</span>
+		<span class="mshborder">MSH Price: {{ msh_price }}{{currency_code}}</span>
 	</td>
 </tr>
 

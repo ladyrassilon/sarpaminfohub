@@ -10,8 +10,9 @@ from sarpaminfohub.infohub.supplier_catalogue_table import SupplierCatalogueTabl
 from sarpaminfohub.infohub.product_table import ProductTable
 from sarpaminfohub.infohub.menu import Menu
 from sarpaminfohub.infohub.forms import SearchForm
-
+from django.template import RequestContext
 from copy import deepcopy
+from django.conf import settings
 
 def get_backend(name):
     if name == "test":
@@ -42,11 +43,16 @@ def search(request):
         results_table = None
         
     search_form = SearchForm(initial = initial_form_values)
-    
-    return render_to_response('search.html', 
-                              {'search_form': search_form,
-                               'results_table': results_table,
-                               'menu' : menu})
+    extra_context = {
+                'search_form': search_form,
+                'results_table': results_table,
+                'menu' : menu,
+                'sarpam_number_format':settings.SARPAM_NUMBER_FORMAT,
+                'sarpam_currency_code':settings.SARPAM_CURRENCY_CODE},
+    return render_to_response(
+                        'search.html', 
+                        dictionary=extra_context,
+                        context_instance=RequestContext(request))
     
 def formulation(request, formulation_id, backend_name="django"):
     backend = get_backend(backend_name)
@@ -70,14 +76,19 @@ def formulation(request, formulation_id, backend_name="django"):
     formulation_tab = get_formulation_tab(None)
     products_tab = get_products_tab(products_href)
     menu = Menu([formulation_tab, products_tab])
-
-    return render_to_response('formulation.html',
-                              {'formulation_table': formulation_table,
-                               'formulation_graph': formulation_graph,
-                               'formulation_msh': formulation_msh,
-                               'menu' : menu,
-                               'search_form' : search_form,
-                               'sub_title' : formulation_name})
+    extra_context = {
+                'formulation_table': formulation_table,
+                'formulation_graph': formulation_graph,
+                'formulation_msh': formulation_msh,
+                'menu' : menu,
+                'search_form' : search_form,
+                'sub_title' : formulation_name,
+                'sarpam_number_format':settings.SARPAM_NUMBER_FORMAT,
+                'sarpam_currency_code':settings.SARPAM_CURRENCY_CODE}
+    return render_to_response(
+                        'formulation.html',
+                        extra_context,
+                        RequestContext(request))
 
 def formulation_products(request, formulation_id, backend_name="django"):
     backend = get_backend(backend_name)
@@ -96,12 +107,17 @@ def formulation_products(request, formulation_id, backend_name="django"):
     formulation_tab = get_formulation_tab(formulation_href)
     products_tab = get_products_tab()
     menu = Menu([formulation_tab, products_tab])
-
-    return render_to_response('formulation_products.html',
-                              {'supplier_table' : supplier_table,
-                               'search_form' : search_form,
-                               'menu' : menu,
-                               'sub_title' : formulation_name})
+    extra_context = {
+            'supplier_table' : supplier_table,
+            'search_form' : search_form,
+            'menu' : menu,
+            'sub_title' : formulation_name,
+            'sarpam_number_format':settings.SARPAM_NUMBER_FORMAT,
+            'sarpam_currency_code':settings.SARPAM_CURRENCY_CODE}
+    return render_to_response(
+                'formulation_products.html',
+                extra_context,            
+                RequestContext(request))
 
 def supplier_catalogue(request, supplier_id, backend_name="django"):
     backend = get_backend(backend_name)
@@ -117,12 +133,17 @@ def supplier_catalogue(request, supplier_id, backend_name="django"):
     menu = Menu([catalogue_tab])
 
     supplier_name = drug_searcher.get_name_of_supplier_with_id(supplier_id)
-
-    return render_to_response('supplier_catalogue.html',
-                              {'supplier_catalogue_table':supplier_catalogue_table,
-                               'menu': menu,
-                               'search_form' : search_form,
-                               'sub_title' : supplier_name})
+    extra_context = {
+                'supplier_catalogue_table':supplier_catalogue_table,
+                'menu': menu,
+                'search_form' : search_form,
+                'sub_title' : supplier_name,
+                'sarpam_number_format':settings.SARPAM_NUMBER_FORMAT,
+                'sarpam_currency_code':settings.SARPAM_CURRENCY_CODE},    
+    return render_to_response(
+                    'supplier_catalogue.html',
+                    extra_context,
+                    context_instance=RequestContext(request))
 
 def get_formulation_tab(formulation_href=None):
     return get_tab(formulation_href, "Procurement Prices")

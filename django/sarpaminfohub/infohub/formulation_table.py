@@ -1,10 +1,12 @@
 import django_tables as tables
 from sarpaminfohub.infohub.sarpam_table import SarpamTable
+from django.conf import settings
+
 
 class FormulationTable(SarpamTable):
     country = tables.Column()
-    fob_price = tables.Column(verbose_name="FOB Price (USD)")
-    landed_price = tables.Column(verbose_name="Landed Price (USD)")
+    fob_price = tables.Column(verbose_name="FOB Price %s"%settings.SARPAM_CURRENCY_CODE)
+    landed_price = tables.Column(verbose_name="Landed Price %s"%settings.SARPAM_CURRENCY_CODE)
 
     def __init__(self, rows):
         for row in rows:

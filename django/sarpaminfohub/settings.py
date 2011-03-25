@@ -95,7 +95,7 @@ INSTALLED_APPS = (
 )
 
 SARPAM_NUMBER_FORMAT = ".03f"
-SARPAM_CURRENCY_CODE = u"(USD)"
+SARPAM_CURRENCY_CODE = "(USD)"
 
 TEMPLATE_CONTEXT_PROCESSORS = ('django.contrib.auth.context_processors.auth',
                                'django.core.context_processors.debug',
@@ -103,7 +103,6 @@ TEMPLATE_CONTEXT_PROCESSORS = ('django.contrib.auth.context_processors.auth',
                                'django.core.context_processors.media',
                                'django.contrib.messages.context_processors.messages',
                                'django.core.context_processors.request',
-                               'sarpaminfohub.infohub.context.extra_settings_context',
                                )
 
 from local_settings import * #@UnusedWildImport
