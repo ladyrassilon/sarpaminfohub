@@ -19,7 +19,8 @@ class SarpamTable(tables.MemoryTable):
         row[column] = value
 
     def as_html(self):
-        return render_to_string('table.html', {'table':self})
+        return render_to_string('table.html', {'table':self,
+                                'sarpam_number_format':self.SARPAM_NUMBER_FORMAT})
 
     def get_rows_template(self):
         self.abstract()

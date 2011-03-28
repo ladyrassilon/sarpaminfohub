@@ -1,11 +1,12 @@
 import django_tables as tables
 from sarpaminfohub.infohub.sarpam_table import SarpamTable
 from django.template.loader import render_to_string
+from django.conf import settings
 
 class FormulationGraph(SarpamTable):
     country = tables.Column()
-    fob_price = tables.Column(verbose_name="FOB Price")
-    landed_price = tables.Column(verbose_name="Landed Price")
+    fob_price = tables.Column(verbose_name="FOB Price %s"%settings.SARPAM_CURRENCY_CODE)
+    landed_price = tables.Column(verbose_name="Landed Price %s"%settings.SARPAM_CURRENCY_CODE)
     max_price = 0
     NO_DATA = ""
 

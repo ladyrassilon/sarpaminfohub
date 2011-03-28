@@ -24,7 +24,8 @@ class ResultsTable(SarpamTable):
     def as_html(self):
         return render_to_string('results.html', \
                                 {'table':self, \
-                                 'search_string':self.search_string})
+                                 'search_string':self.search_string,
+                                 'sarpam_number_format':self.SARPAM_NUMBER_FORMAT})
 
     def get_rows_template(self):
         return "drug_price_rows.html"
